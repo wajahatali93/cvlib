@@ -63,23 +63,23 @@ def detect_common_objects(image, confidence=0.5, nms_thresh=0.3, model='yolov3',
     global classes
     global dest_dir
 
+    config_file_abs_path = ''
+    weights_file_abs_path = ''
     if model == 'yolov3-tiny':
         config_file_name = 'yolov3-tiny.cfg'
         cfg_url = "https://github.com/pjreddie/darknet/raw/master/cfg/yolov3-tiny.cfg"
         weights_file_name = 'yolov3-tiny.weights'
         weights_url = 'https://pjreddie.com/media/files/yolov3-tiny.weights'
         blob = cv2.dnn.blobFromImage(image, scale, (416,416), (0,0,0), True, crop=False)
-
+        config_file_abs_path = dest_dir + os.path.sep + config_file_name
+        weights_file_abs_path = dest_dir + os.path.sep + weights_file_name  
 
     else:
         config_file_name = 'yolov3.cfg'
-        cfg_url = 'https://github.com/arunponnusamy/object-detection-opencv/raw/master/yolov3.cfg'
         weights_file_name = 'yolov3.weights'
-        weights_url = 'https://pjreddie.com/media/files/yolov3.weights'
         blob = cv2.dnn.blobFromImage(image, scale, (416,416), (0,0,0), True, crop=False)    
-
-    config_file_abs_path = dest_dir + os.path.sep + config_file_name
-    weights_file_abs_path = dest_dir + os.path.sep + weights_file_name    
+        config_file_abs_path = '/cvlib-od/model_data/yolov3.cfg'
+        weights_file_abs_path = '/cvlib-od/model_data/yolo3.weights'
     
     if not os.path.exists(config_file_abs_path):
         download_file(url=cfg_url, file_name=config_file_name, dest_dir=dest_dir)
